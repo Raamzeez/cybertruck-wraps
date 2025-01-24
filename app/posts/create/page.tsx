@@ -8,7 +8,7 @@ import AuthenticatedLayout from "@/app/layouts/AuthenticatedLayout";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { createWrap } from "@/app/actions";
+import { createWrap, updateWraps } from "@/app/actions";
 import { useRouter } from "next/navigation";
 
 const CreatePost = () => {
@@ -40,6 +40,7 @@ const CreatePost = () => {
           createWrap(title, base64File, description, anonymous);
           setLoading(false);
           toast.success("Created post successfully");
+          await updateWraps();
           return router.push("/");
         } catch (err: any) {
           setLoading(false);

@@ -7,6 +7,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { v2 as cloudinary } from "cloudinary";
 
+export const updateWraps = async () => {
+  "use server";
+
+  return revalidatePath("/");
+};
+
 export const fetchWrapById = async (id: string) => {
   "use server";
 

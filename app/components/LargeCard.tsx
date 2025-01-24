@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import directDownload from "../lib/directDownload";
 import {
   Dialog,
@@ -25,6 +23,7 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
   const handleDelete = () => {
     try {
       deleteWrap(wrap._id);
+      toast.success("Deleted wrap successfully!");
       return router.push("/");
     } catch (err: any) {
       return toast.error(err.message);

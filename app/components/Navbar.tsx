@@ -1,9 +1,10 @@
-import { useSession } from "next-auth/react";
 import React from "react";
 import AuthButton from "./AuthButton";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileUpload } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   return (
@@ -18,7 +19,10 @@ const Navbar = () => {
           />
         </Link>
         <Link href={"/posts/create"}>
-          <Button className="bg-blue-400 hover:bg-blue-600">Upload</Button>
+          <Button className="bg-blue-400 hover:bg-blue-600 hover:shadow-lg">
+            <FontAwesomeIcon icon={faFileUpload} color="white" />
+            Upload
+          </Button>
         </Link>
       </div>
       <AuthButton />

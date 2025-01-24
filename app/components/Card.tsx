@@ -62,7 +62,11 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
         />
         {wrap.isAuthor && (
           <button
-            onClick={handleDelete}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleDelete();
+            }}
             className="flex justify-center items-center w-9 h-9 rounded-full bg-red-500 hover:bg-red-700 font-bold shadow-md"
           >
             <FontAwesomeIcon icon={faTrash} className="fa-fw" color="white" />
