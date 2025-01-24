@@ -9,9 +9,6 @@ export const metadata = {
   title: "Cybertruck Wraps",
   description: "A website that hosts digital cybertruck wraps",
   viewport: "width=device-width, initial-scale=1.0",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
