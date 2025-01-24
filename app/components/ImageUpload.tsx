@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import validateFilename from "../lib/validateFilename";
 
 interface Props {
   setUploadedFile: (file: File | null) => void;
@@ -31,7 +32,7 @@ const ImageUpload = ({ setUploadedFile }: Props) => {
 
     const file = acceptedFiles[0];
 
-    if (/[^a-zA-Z0-9._\s-]/.test(file.name)) {
+    if (!validateFilename(file.name)) {
       setError(
         `File name "${file.name}" contains invalid characters. Only alphanumeric characters, dots, underscores, and hyphens are allowed.`
       );

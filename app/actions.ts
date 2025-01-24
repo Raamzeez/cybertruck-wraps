@@ -7,6 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { v2 as cloudinary } from "cloudinary";
 import sharp from "sharp";
+import validateFilename from "./lib/validateFilename";
 
 export const updateWraps = async () => {
   "use server";
@@ -92,6 +93,12 @@ export const createWrap = async (
   try {
     const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
     const binaryData = Buffer.from(base64Data, "base64");
+
+    if (!validateFilename(filename)) {
+      throw new Error(
+        `File name "${filename}" contains invalid characters. Only alphanumeric characters, dots, underscores, and hyphens are allowed.`
+      );
+    }
 
     const MAX_SIZE = 1024 * 1024;
     if (binaryData.length > MAX_SIZE) {
