@@ -16,7 +16,7 @@ const ImageUpload = ({ setUploadedFile }: Props) => {
   const onDrop = (acceptedFiles: File[]) => {
     setError(null);
 
-    const MAX_SIZE = 1024 * 1024; // 1 MB
+    const MAX_SIZE = 1024 * 1024;
     if (acceptedFiles.length > 1) {
       setError("Only one image can be uploaded at a time.");
       return;

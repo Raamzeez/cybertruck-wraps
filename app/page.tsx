@@ -31,14 +31,14 @@ export default async function Home() {
 
   const foundWraps = await WrapMongoose.find()
     .populate("user", "image name")
-    .lean(); // Populate 'user' and fetch only the 'image' field
+    .lean();
   const userWraps: Wrap[] = foundWraps.map((wrap) => ({
     ...wrap,
-    _id: wrap._id.toString(), // Convert ObjectId to string
-    profilePicture: wrap.user?.image || null, // Add profilePicture or fallback to null
+    _id: wrap._id.toString(),
+    profilePicture: wrap.user?.image || null,
     isAuthor: session?.user.id === wrap.user?._id.toString(),
     author: wrap.user?.name,
-    user: undefined, // Remove user object to avoid serialization issues
+    user: undefined,
   }));
 
   const wraps: Wrap[] = officialwraps.concat(userWraps);
