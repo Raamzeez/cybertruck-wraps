@@ -31,7 +31,6 @@ export default async function Page({
       isAuthor: session?.user.id === wrap.user?._id.toString(),
       official: true,
     };
-    console.log(wrap);
     return <LargeCard wrap={modifiedWrap} />;
   }
   const wrap = await fetchWrapById(id);
@@ -40,6 +39,7 @@ export default async function Page({
     title: wrap.title,
     image: wrap.image,
     description: wrap.description,
+    createdAt: wrap.createdAt,
     isAuthor: session?.user.id === wrap.user?._id.toString(),
   };
   return <LargeCard wrap={modifiedWrap} />;

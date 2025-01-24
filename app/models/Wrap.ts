@@ -3,6 +3,7 @@ interface Wrap {
   title: string;
   image: string;
   author: string;
+  createdAt: Date;
   description?: string;
   official?: boolean;
   sha?: number;

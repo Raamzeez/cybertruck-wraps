@@ -97,7 +97,7 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
         {!wrap.official && (
           <div className="flex justify-around items-center mt-3 space-x-4">
             <h1 className="text-gray-600 dark:text-gray-300 text-xs font-light">
-              Date Posted: {new Date().toLocaleDateString()}
+              Date Posted: {wrap.createdAt.toLocaleDateString()}
             </h1>
             <h1 className="text-gray-600 dark:text-gray-300 text-xs font-light">
               Published by: {!wrap.anonymous ? wrap.author : "Anonymous"}
