@@ -1,7 +1,9 @@
 import { fetchWrapById } from "@/app/actions";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import LargeCard from "@/app/components/LargeCard";
 import Wrap from "@/app/models/Wrap";
 import { isValidObjectId } from "mongoose";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 export default async function Page({
@@ -9,6 +11,7 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const session = await getServerSession(authOptions);
   const id = (await params).id;
 
   if (!isValidObjectId(id)) {
@@ -25,6 +28,7 @@ export default async function Page({
         .split(".")
         .slice(0, -1)
         .join(""),
+      isAuthor: session?.user.id === wrap.user?._id.toString(),
       official: true,
     };
     console.log(wrap);
@@ -36,6 +40,7 @@ export default async function Page({
     title: wrap.title,
     image: wrap.image,
     description: wrap.description,
+    isAuthor: session?.user.id === wrap.user?._id.toString(),
   };
   return <LargeCard wrap={modifiedWrap} />;
 }

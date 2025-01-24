@@ -14,9 +14,22 @@ import {
 } from "@/components/ui/dialog";
 import Wrap from "../models/Wrap";
 import { Button } from "@/components/ui/button";
+import { deleteWrap } from "../actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const LargeCard = ({ wrap }: { wrap: Wrap }) => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const handleDelete = () => {
+    try {
+      deleteWrap(wrap._id);
+      return router.push("/");
+    } catch (err: any) {
+      return toast.error(err.message);
+    }
+  };
 
   return (
     <div className="flex justify-evenly">
@@ -46,20 +59,17 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
           >
             Download
           </Button>
-          <Button className="bg-red-400 hover:bg-red-600">Delete</Button>
+          {wrap.isAuthor && (
+            <Button
+              className="bg-red-400 hover:bg-red-600"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          )}
         </div>
       </div>
       <div>
-        <div className="flex flex-col justify-between">
-          {wrap.isAuthor && (
-            <button
-              onClick={() => null}
-              className="flex justify-center items-center w-9 h-9 rounded-full bg-red-500 hover:bg-red-700 font-bold shadow-md"
-            >
-              <FontAwesomeIcon icon={faTrash} className="fa-fw" color="white" />
-            </button>
-          )}
-        </div>
         <div className="flex flex-col space-y-5 justify-center items-start">
           <h1 className="text-3xl mt-7 font-bold dark:text-white">
             {wrap.title}
