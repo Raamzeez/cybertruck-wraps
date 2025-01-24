@@ -2,6 +2,7 @@ import { fetchWrapById } from "@/app/actions";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Error from "@/app/components/Error";
 import LargeCard from "@/app/components/LargeCard";
+import OfficialWrap from "@/app/models/OfficialWrap";
 import Wrap from "@/app/models/Wrap";
 import WrapMongoose from "@/app/models/WrapMongoose";
 import { isValidObjectId } from "mongoose";
@@ -56,7 +57,7 @@ export default async function Page({
       author: populatedWrap?.user?.name,
     };
     return <LargeCard wrap={modifiedWrap} />;
-  } catch (error) {
+  } catch {
     return <Error />;
   }
 }

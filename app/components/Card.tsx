@@ -21,8 +21,11 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
     try {
       await deleteWrap(wrap._id);
       return toast.success("Wrap deleted successfully");
-    } catch (err: any) {
-      return toast.error(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return toast.error(err.message);
+      }
+      return toast.error("Unable to delete wrap");
     }
   };
 

@@ -14,3 +14,5 @@ interface OfficialWrap {
     html: string;
   };
 }
+
+export default OfficialWrap;

@@ -17,13 +17,11 @@ const CreatePost = () => {
   const [description, setDescription] = useState("");
   const [anonymous, setAnonymous] = useState<boolean>(true);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleUpload = async () => {
     if (!uploadedFile) {
-      setError("No files selected for upload.");
-      return;
+      return toast.error("No files selected for upload.");
     }
 
     if (!title) {
@@ -39,7 +37,7 @@ const CreatePost = () => {
         try {
           await createWrap(
             title,
-            base64File,
+            base64File as string,
             uploadedFile.name,
             description,
             anonymous
@@ -50,13 +48,16 @@ const CreatePost = () => {
           return router.push("/");
         } catch (err: any) {
           setLoading(false);
-          return toast.error(err.message);
+          if (err instanceof Error) {
+            return toast.error(err.message);
+          }
+          return toast.error("Unable to create post");
         }
       };
     } catch (error) {
       setLoading(false);
       console.error("Error during file upload:", error);
-      setError("Failed to upload the image. Please try again.");
+      return toast.error("Failed to upload the image. Please try again.");
     }
   };
 

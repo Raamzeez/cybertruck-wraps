@@ -21,8 +21,11 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
       await deleteWrap(wrap._id);
       toast.success("Deleted wrap successfully!");
       return router.push("/");
-    } catch (err: any) {
-      return toast.error(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return toast.error(err.message);
+      }
+      return toast.error("Unable to delete wrap");
     }
   };
 

@@ -4,7 +4,7 @@ import { connectToDatabase } from "../lib/mongodb";
 import { getServerSession } from "next-auth/next";
 import WrapMongoose from "./models/WrapMongoose";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import { Metadata } from "next";
+import OfficialWrap from "./models/OfficialWrap";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);

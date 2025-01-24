@@ -19,8 +19,9 @@ const InstallationModal = ({ open, onOpenChange }: Props) => {
         <DialogHeader>
           <DialogTitle>Installation Guidelines</DialogTitle>
           <DialogDescription>
-            Grab your USB drive, and create a folder called “Wraps” at the root
-            level of the "TSLADRIVE". Places the images in that folder
+            Grab your USB drive, and create a folder called &ldquo;Wraps&rdquo;
+            at the root level of the &ldquo;TSLADRIVE&rdquo;. Place the images
+            in that folder.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

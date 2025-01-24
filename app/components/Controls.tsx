@@ -1,15 +1,6 @@
 "use client";
 
 import React from "react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import directDownload from "../lib/directDownload";
 import { Input } from "@/components/ui/input";
