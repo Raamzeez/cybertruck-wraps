@@ -3,21 +3,17 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import directDownload from "../lib/directDownload";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import Wrap from "../models/Wrap";
 import { Button } from "@/components/ui/button";
 import { deleteWrap } from "../actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import InstallationModal from "./InstallationModal";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 const LargeCard = ({ wrap }: { wrap: Wrap }) => {
-  const [open, setOpen] = useState(false);
+  const [downloadModal, setDownloadModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const router = useRouter();
 
   const handleDelete = () => {
@@ -33,17 +29,15 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
   return (
     <div className="flex justify-evenly">
       <div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Installation Guidelines</DialogTitle>
-              <DialogDescription>
-                Grab your USB drive, and create a folder called “Wraps” at the
-                root level of the "TSLADRIVE". Places the images in that folder
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
+        <InstallationModal
+          open={downloadModal}
+          onOpenChange={setDownloadModal}
+        />
+        <ConfirmDeleteModal
+          open={deleteModal}
+          onOpenChange={setDeleteModal}
+          handleDelete={handleDelete}
+        />
         <Image
           src={wrap.image}
           height={400}
@@ -54,14 +48,17 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
         <div className="mt-16 flex justify-around">
           <Button
             className="bg-emerald-400 hover:bg-emerald-600"
-            onClick={() => directDownload(wrap.image, wrap.title)}
+            onClick={() => {
+              directDownload(wrap.image, wrap.title);
+              setDownloadModal(true);
+            }}
           >
             Download
           </Button>
           {wrap.isAuthor && (
             <Button
               className="bg-red-400 hover:bg-red-600"
-              onClick={handleDelete}
+              onClick={() => setDeleteModal(true)}
             >
               Delete
             </Button>
@@ -97,8 +94,8 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
               Date Posted: {wrap.createdAt.toLocaleDateString()}
             </h1>
           )}
-          <h5 className="text-xs mt-5 font-semibold text-gray dark:text-white">
-            {wrap.description}
+          <h5 className="text-lg mt-5 text-gray-600 dark:text-gray-300 font-light">
+            Description: {wrap.description}
           </h5>
         </div>
       </div>
