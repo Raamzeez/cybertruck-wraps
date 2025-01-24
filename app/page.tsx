@@ -4,6 +4,12 @@ import { connectToDatabase } from "../lib/mongodb";
 import { getServerSession } from "next-auth/next";
 import WrapMongoose from "./models/WrapMongoose";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cybertruck Wraps",
+  description: "A colleciton of digital cybertruck wraps",
+};
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
