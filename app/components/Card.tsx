@@ -69,7 +69,7 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              directDownload(wrap.image, wrap.title);
+              directDownload(wrap.image, wrap.filename);
               setDownloadModal(true);
             }}
             className="flex justify-center items-center w-9 h-9 rounded-full bg-blue-500 hover:bg-blue-700 font-bold shadow-md"

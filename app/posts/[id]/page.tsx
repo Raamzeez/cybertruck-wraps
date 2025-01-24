@@ -23,12 +23,14 @@ export default async function Page({
     const wrap = json.filter((wrap) => wrap.sha === id)[0];
     const modifiedWrap: Wrap = {
       image: wrap.download_url,
+      filename: wrap.name,
       title: (wrap.path.split("/").pop() as string)
         .split("_")
         .join(" ")
         .split(".")
         .slice(0, -1)
         .join(""),
+      author: "Tesla Motors",
       isAuthor: session?.user.id === wrap.user?._id.toString(),
       description: "Official Tesla Cybertruck Wraps From Github",
       official: true,
@@ -43,6 +45,7 @@ export default async function Page({
     _id: wrap._id.toString(),
     title: wrap.title,
     image: wrap.image,
+    filename: wrap.filename,
     description: wrap.description,
     createdAt: wrap.createdAt,
     isAuthor: session?.user.id === wrap.user?._id.toString(),

@@ -49,7 +49,7 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
           <Button
             className="bg-emerald-400 hover:bg-emerald-600"
             onClick={() => {
-              directDownload(wrap.image, wrap.title);
+              directDownload(wrap.image, wrap.filename);
               setDownloadModal(true);
             }}
           >

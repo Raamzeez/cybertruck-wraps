@@ -37,7 +37,13 @@ const CreatePost = () => {
       reader.onloadend = async () => {
         const base64File = reader.result;
         try {
-          createWrap(title, base64File, description, anonymous);
+          createWrap(
+            title,
+            base64File,
+            uploadedFile.name,
+            description,
+            anonymous
+          );
           setLoading(false);
           toast.success("Created post successfully");
           await updateWraps();
@@ -100,6 +106,9 @@ const CreatePost = () => {
               be shorter than 30 character
             </li>
             <li>PNG is the only acceptable file format</li>
+            <h1 className="font-semibold text-blue-400 mt-5">
+              Note: The filename will be used when any user downloads the image
+            </h1>
           </ul>
           <ImageUpload setUploadedFile={setUploadedFile} />
           {uploadedFile && (

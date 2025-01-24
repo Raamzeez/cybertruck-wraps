@@ -6,6 +6,7 @@ export interface Wrap extends Document {
   title: string;
   description?: string;
   image: string;
+  filename: string;
   anonymous?: boolean;
   user: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
@@ -15,6 +16,7 @@ const WrapSchema: Schema<Wrap> = new Schema(
   {
     title: { type: String, required: true, trim: true },
     description: { type: String, required: false, trim: true },
+    filename: { type: String, required: false, trim: true },
     anonymous: { type: Boolean, required: true, default: false },
     image: { type: String, required: true },
     user: {

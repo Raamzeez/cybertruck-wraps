@@ -18,6 +18,7 @@ export default async function Home() {
   const json: OfficialWrap[] = await response.json();
   const officialwraps: Wrap[] = json.map((wrap) => ({
     sha: wrap.sha,
+    filename: wrap.name,
     title: (wrap.path.split("/").pop() as string)
       .split("_")
       .join(" ")

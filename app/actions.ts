@@ -55,6 +55,7 @@ export const deleteWrap = async (id: string) => {
 export const createWrap = async (
   title: string,
   image: string,
+  filename: string,
   description: string,
   anonymous: boolean
 ) => {
@@ -110,6 +111,7 @@ export const createWrap = async (
     await WrapMongoose.create({
       title,
       image: uploadResponse.secure_url,
+      filename,
       description,
       anonymous,
       user: session.user.id,
