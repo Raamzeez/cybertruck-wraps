@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { v2 as cloudinary } from "cloudinary";
+import sharp from "sharp";
 
 export const updateWraps = async () => {
   "use server";
@@ -82,6 +83,26 @@ export const createWrap = async (
   await connectToDatabase();
 
   try {
+    const base64Data = image.replace(/^data:image\/\w+;base64,/, "");
+    const binaryData = Buffer.from(base64Data, "base64");
+
+    const MAX_SIZE = 1024 * 1024;
+    if (binaryData.length > MAX_SIZE) {
+      throw new Error("File is too large. Max size is 1 MB.");
+    }
+
+    const fileType = image.match(/^data:(image\/\w+);base64,/);
+    if (!fileType || fileType[1] !== "image/png") {
+      throw new Error("Invalid file type. Only PNG images are allowed.");
+    }
+
+    const metadata = await sharp(binaryData).metadata();
+    if (metadata.width !== 1024 || metadata.height !== 768) {
+      throw new Error(
+        `Image resolution must be 1024x768 pixels. Your image is ${metadata.width}x${metadata.height} pixels.`
+      );
+    }
+
     const uploadResponse = await cloudinary.uploader.upload(image, {
       upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
     });
