@@ -27,7 +27,9 @@ export default function AuthButton() {
         }}
       >
         <FontAwesomeIcon icon={faGoogle} color="white" />
-        <p className="text-sm font-semibold text-white">Sign In with Google</p>
+        <p className="text-sm font-semibold text-white">
+          Sign In <span className="hidden xxs:inline">with Google</span>
+        </p>
       </Button>
     );
   }

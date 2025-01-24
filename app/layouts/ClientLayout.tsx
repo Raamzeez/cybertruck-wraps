@@ -13,7 +13,7 @@ export default function ClientLayout({
     <SessionProvider>
       <Toaster richColors position="top-right" />
       <Navbar />
-      <div className="p-2 md:p-8">{children}</div>
+      <div className="pt-24 p-2 md:pt-24 md:p-8">{children}</div>
     </SessionProvider>
   );
 }
