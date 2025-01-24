@@ -27,7 +27,7 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
   };
 
   return (
-    <div className="flex justify-evenly">
+    <div className="flex flex-col sm:flex-row justify-evenly space-x-10 px-5">
       <div>
         <InstallationModal
           open={downloadModal}
@@ -43,7 +43,7 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
           height={400}
           width={400}
           alt="Cybertruck Wrap"
-          className="mt-5"
+          className="mt-5 mx-auto"
         />
         <div className="mt-16 flex justify-around">
           <Button
@@ -67,7 +67,7 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
       </div>
       <div>
         <div className="flex flex-col space-y-5 justify-center items-start">
-          <h1 className="text-3xl mt-7 font-bold dark:text-white">
+          <h1 className="text-3xl mt-12 sm:mt-7 font-bold dark:text-white">
             {wrap.title}
           </h1>
           <div className="flex items-center space-x-3">

@@ -59,14 +59,14 @@ const CreatePost = () => {
       <div className="flex justify-center">
         <div className="flex flex-col justify-center items-center w-3/4 p-8 bg-white dark:bg-gray-700 shadow-lg border dark:border-none">
           <Input
-            className="w-80"
+            className="max-w-80"
             placeholder="Title"
             required={true}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <Input
-            className="mt-5 w-80"
+            className="mt-5 max-w-80"
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
