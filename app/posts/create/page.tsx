@@ -46,7 +46,7 @@ const CreatePost = () => {
           toast.success("Created post successfully");
           await updateWraps();
           return router.push("/");
-        } catch (err: any) {
+        } catch (err: unknown) {
           setLoading(false);
           if (err instanceof Error) {
             return toast.error(err.message);
