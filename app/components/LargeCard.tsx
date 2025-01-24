@@ -92,9 +92,11 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
               className="rounded-full"
             />
           </div>
-          <h1 className="text-lg text-gray-600 dark:text-gray-300 font-light">
-            Date Posted: {wrap.createdAt.toLocaleDateString()}
-          </h1>
+          {!wrap.official && (
+            <h1 className="text-lg text-gray-600 dark:text-gray-300 font-light">
+              Date Posted: {wrap.createdAt.toLocaleDateString()}
+            </h1>
+          )}
           <h5 className="text-xs mt-5 font-semibold text-gray dark:text-white">
             {wrap.description}
           </h5>
