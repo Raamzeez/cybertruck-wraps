@@ -8,6 +8,7 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import { v2 as cloudinary } from "cloudinary";
 import sharp from "sharp";
 import validateFilename from "./lib/validateFilename";
+import extractPublicId from "./lib/extractPublicId";
 
 export const updateWraps = async () => {
   "use server";
@@ -51,6 +52,16 @@ export const deleteWrap = async (id: string) => {
     }
 
     await WrapMongoose.findByIdAndDelete(id);
+
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+
+    const publicId = extractPublicId(foundWrap.image);
+
+    await cloudinary.uploader.destroy(publicId);
 
     revalidatePath("/wraps");
   } catch (error) {
