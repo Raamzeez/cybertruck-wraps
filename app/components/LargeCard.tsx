@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import directDownload from "../lib/directDownload";
 import {
   Dialog,
@@ -13,9 +13,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import Wrap from "../models/Wrap";
-import { deleteWrap } from "../actions";
-import { toast } from "sonner";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const LargeCard = ({ wrap }: { wrap: Wrap }) => {
@@ -43,7 +40,10 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
           className="mt-5"
         />
         <div className="mt-16 flex justify-around">
-          <Button className="bg-emerald-400 hover:bg-emerald-600">
+          <Button
+            className="bg-emerald-400 hover:bg-emerald-600"
+            onClick={() => directDownload(wrap.image, wrap.title)}
+          >
             Download
           </Button>
           <Button className="bg-red-400 hover:bg-red-600">Delete</Button>
@@ -59,21 +59,15 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
               <FontAwesomeIcon icon={faTrash} className="fa-fw" color="white" />
             </button>
           )}
-          {/* <button
-          onClick={() => {
-            directDownload(wrap.image, wrap.title);
-            setOpen(true);
-          }}
-          className="flex justify-center items-center w-9 h-9 rounded-full bg-blue-500 hover:bg-blue-700 font-bold shadow-md"
-        >
-          <FontAwesomeIcon icon={faDownload} className="fa-fw" color="white" />
-        </button> */}
         </div>
         <div className="flex flex-col space-y-5 justify-center items-start">
           <h1 className="text-3xl mt-7 font-bold dark:text-white">
             {wrap.title}
           </h1>
           <div className="flex items-center space-x-3">
+            <h1 className="text-lg text-gray-600 dark:text-gray-300 font-light">
+              Published by: {!wrap.anonymous ? wrap.author : "Anonymous"}
+            </h1>
             <Image
               src={
                 wrap.official
@@ -88,9 +82,6 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
               alt="Tesla Logo"
               className="rounded-full"
             />
-            <h1 className="text-lg text-gray-600 dark:text-gray-300 font-light">
-              Published by: {!wrap.anonymous ? wrap.author : "Anonymous"}
-            </h1>
           </div>
           <h1 className="text-lg text-gray-600 dark:text-gray-300 font-light">
             Date Posted: {new Date().toLocaleDateString()}

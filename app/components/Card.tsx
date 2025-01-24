@@ -31,7 +31,7 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
 
   return (
     <Link
-      href={`/posts/${!wrap.official ? wrap._id : wrap.title}`}
+      href={`/posts/${!wrap.official ? wrap._id : wrap.sha}`}
       className="relative flex flex-col bg-gray-100 dark:bg-gray-900 shadow-sm hover:shadow-lg cursor-pointer rounded-md max-w-sm min-h-72 min-w-0 md:min-w-96 p-4 transition-shadow duration-150"
     >
       <Dialog open={open} onOpenChange={setOpen}>

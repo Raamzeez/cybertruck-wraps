@@ -31,18 +31,6 @@ const Controls = ({ onSearch }: Props) => {
           onChange={(e) => onSearch(e.target.value)}
         />
       </div>
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select an option" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Sort By</SelectLabel>
-            <SelectItem value="most-recent">Most Recent</SelectItem>
-            <SelectItem value="official-wraps">Official Tesla Wraps</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
       <Button
         onClick={() =>
           directDownload(
