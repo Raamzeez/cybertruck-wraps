@@ -40,11 +40,17 @@ export const deleteWrap = async (id: string) => {
   await connectToDatabase();
 
   try {
-    const deletedWrap = await WrapMongoose.findByIdAndDelete(id);
-
-    if (!deletedWrap) {
-      throw new Error("Wrap was not found. Please refresh app");
+    const foundWrap = await WrapMongoose.findById(id);
+    if (!foundWrap) {
+      throw new Error("Wrap not found. Please refresh app");
     }
+
+    if (foundWrap.user.toString() !== session.user.id) {
+      throw new Error("You can only delete your own wraps");
+    }
+
+    await WrapMongoose.findByIdAndDelete(id);
+
     revalidatePath("/wraps");
   } catch (error) {
     console.error("Error", error);

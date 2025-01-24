@@ -1,8 +1,6 @@
-import client from "./lib/db";
 import Wrap from "./models/Wrap";
 import WrapsList from "./components/WrapsList";
 import { connectToDatabase } from "../lib/mongodb";
-import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
 import WrapMongoose from "./models/WrapMongoose";
 import { authOptions } from "./api/auth/[...nextauth]/route";

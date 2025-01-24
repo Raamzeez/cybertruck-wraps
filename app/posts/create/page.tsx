@@ -63,7 +63,7 @@ const CreatePost = () => {
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center">
-        <div className="flex flex-col justify-center items-center w-3/4 p-8 bg-white dark:bg-gray-700 shadow-lg border dark:border-none">
+        <div className="flex flex-col justify-center items-center w-full p-8 bg-white dark:bg-gray-700 shadow-lg border dark:border-none">
           <Input
             className="max-w-80"
             placeholder="Title"
