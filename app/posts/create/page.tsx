@@ -9,8 +9,10 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { createWrap } from "@/app/actions";
+import { useRouter } from "next/navigation";
 
 const CreatePost = () => {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [anonymous, setAnonymous] = useState<boolean>(true);
@@ -37,7 +39,8 @@ const CreatePost = () => {
         try {
           createWrap(title, base64File, description, anonymous);
           setLoading(false);
-          return toast.success("Created post successfully");
+          toast.success("Created post successfully");
+          return router.push("/");
         } catch (err: any) {
           setLoading(false);
           return toast.error(err.message);
