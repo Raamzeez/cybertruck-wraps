@@ -80,15 +80,13 @@ export const createWrap = async (
       upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
     });
 
-    const newWrap = await WrapMongoose.create({
+    await WrapMongoose.create({
       title,
       image: uploadResponse.secure_url,
       description,
       anonymous,
       user: session.user.id,
     });
-
-    return newWrap;
   } catch (error) {
     console.error("Error", error);
     throw new Error("Failed to upload post");
