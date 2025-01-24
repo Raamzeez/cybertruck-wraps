@@ -3,8 +3,8 @@ import WrapsList from "./components/WrapsList";
 import { connectToDatabase } from "../lib/mongodb";
 import { getServerSession } from "next-auth/next";
 import WrapMongoose from "./models/WrapMongoose";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import OfficialWrap from "./models/OfficialWrap";
+import { authOptions } from "./lib/auth";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);

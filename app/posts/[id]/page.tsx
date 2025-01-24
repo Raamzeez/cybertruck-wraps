@@ -1,7 +1,7 @@
 import { fetchWrapById } from "@/app/actions";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Error from "@/app/components/Error";
 import LargeCard from "@/app/components/LargeCard";
+import { authOptions } from "@/app/lib/auth";
 import OfficialWrap from "@/app/models/OfficialWrap";
 import Wrap from "@/app/models/Wrap";
 import WrapMongoose from "@/app/models/WrapMongoose";

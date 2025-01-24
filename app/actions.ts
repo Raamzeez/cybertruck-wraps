@@ -4,11 +4,11 @@ import { connectToDatabase } from "@/lib/mongodb";
 import WrapMongoose from "./models/WrapMongoose";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { v2 as cloudinary } from "cloudinary";
 import sharp from "sharp";
 import validateFilename from "./lib/validateFilename";
 import extractPublicId from "./lib/extractPublicId";
+import { authOptions } from "./lib/auth";
 
 export const updateWraps = async () => {
   "use server";
