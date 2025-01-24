@@ -7,10 +7,15 @@ import Link from "next/link";
 import { useState } from "react";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Button } from "@/components/ui/button";
+import { SyncLoader } from "react-spinners";
 
 export default function AuthButton() {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <SyncLoader size={10} color="dodgerblue" />;
+  }
 
   if (!session || !session.user) {
     return (

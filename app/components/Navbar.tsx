@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session } = useSession();
-  const { width } = useWindowDimensions();
+  const width = 500;
 
   return (
     <div className="flex items-center justify-between bg-white dark:bg-gray-700 px-4 py-4 shadow-md w-full">
