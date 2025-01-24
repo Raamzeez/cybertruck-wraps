@@ -26,7 +26,7 @@ export default async function Home() {
       .slice(0, -1)
       .join(""),
     image: wrap.download_url,
-    description: "Official Tesla Cybertruck Wraps From Github",
+    description: "Official Tesla Cybertruck Wrap From Github",
     official: true,
   }));
 

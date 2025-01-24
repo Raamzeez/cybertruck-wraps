@@ -10,12 +10,12 @@ interface Props {
 }
 
 const AuthenticatedLayout = ({ children }: Props) => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
       {status === "loading" && <SyncLoader size={10} color="dodgerblue" />}
-      {status !== "loading" && (!session || !session.user) && (
+      {status === "unauthenticated" && (
         <>
           <h1 className="font-semibold text-2xl dark:text-white my-8">
             Please login to create a post
@@ -23,10 +23,9 @@ const AuthenticatedLayout = ({ children }: Props) => {
           <AuthButton />
         </>
       )}
+      {status === "authenticated" && children}
     </div>
   );
-
-  return <>{children}</>;
 };
 
 export default AuthenticatedLayout;

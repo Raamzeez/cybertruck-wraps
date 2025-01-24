@@ -32,7 +32,7 @@ export default async function Page({
         .join(""),
       author: "Tesla Motors",
       isAuthor: session?.user.id === wrap.user?._id.toString(),
-      description: "Official Tesla Cybertruck Wraps From Github",
+      description: "Official Tesla Cybertruck Wrap From Github",
       official: true,
     };
     return <LargeCard wrap={modifiedWrap} />;
