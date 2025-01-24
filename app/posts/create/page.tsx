@@ -79,7 +79,7 @@ const CreatePost = () => {
               id="terms"
               defaultChecked={true}
               value={String(anonymous)}
-              onChange={() => setAnonymous(!anonymous)}
+              onClick={() => setAnonymous((prev) => !prev)}
             />
             <label
               htmlFor="terms"
