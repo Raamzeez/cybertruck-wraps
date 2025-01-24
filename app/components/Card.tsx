@@ -17,9 +17,9 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
   const [downloadModal, setDownloadModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
-      deleteWrap(wrap._id);
+      await deleteWrap(wrap._id);
       return toast.success("Wrap deleted successfully");
     } catch (err: any) {
       return toast.error(err.message);

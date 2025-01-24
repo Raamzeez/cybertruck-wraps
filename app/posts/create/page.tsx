@@ -37,7 +37,7 @@ const CreatePost = () => {
       reader.onloadend = async () => {
         const base64File = reader.result;
         try {
-          createWrap(
+          await createWrap(
             title,
             base64File,
             uploadedFile.name,

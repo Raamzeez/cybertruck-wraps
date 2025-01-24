@@ -16,9 +16,9 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const router = useRouter();
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
-      deleteWrap(wrap._id);
+      await deleteWrap(wrap._id);
       toast.success("Deleted wrap successfully!");
       return router.push("/");
     } catch (err: any) {
