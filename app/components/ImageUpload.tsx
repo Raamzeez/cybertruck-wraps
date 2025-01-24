@@ -16,6 +16,13 @@ const ImageUpload = ({ setUploadedFile }: Props) => {
   const onDrop = (acceptedFiles: File[]) => {
     setError(null);
 
+    if (acceptedFiles.length === 0) {
+      setError(
+        "No file accepted or invalid file type. Ensure you are uploading only 1 PNG file."
+      );
+      return;
+    }
+
     const MAX_SIZE = 1024 * 1024;
     if (acceptedFiles.length > 1) {
       setError("Only one image can be uploaded at a time.");
@@ -41,7 +48,7 @@ const ImageUpload = ({ setUploadedFile }: Props) => {
     }
 
     if (file.type !== "image/png") {
-      setError(`Only PNG files are allowed. ${file.name} is not a PNG.`);
+      setError(`Only a PNG file is allowed. ${file.name} is not a PNG.`);
       return;
     }
 
