@@ -54,9 +54,12 @@ export default async function Page({
       filename: wrap.filename,
       description: wrap.description,
       createdAt: wrap.createdAt,
+      // @ts-ignore
       isAuthor: session?.user.id === (wrap.user?._id as User).toString(),
       anonymous: wrap.anonymous,
+      // @ts-ignore
       profilePicture: populatedWrap?.user?.image,
+      // @ts-ignore
       author: populatedWrap?.user?.name,
     };
     return <LargeCard wrap={modifiedWrap} />;

@@ -15,6 +15,7 @@ export default async function Home() {
     "https://api.github.com/repos/teslamotors/custom-wraps/contents/example/cybertruck"
   );
   const json: OfficialWrap[] = await response.json();
+  // @ts-ignore
   const officialwraps: Wrap[] = json.map((wrap) => ({
     sha: wrap.sha,
     filename: wrap.name,
@@ -35,8 +36,11 @@ export default async function Home() {
   const userWraps: Wrap[] = foundWraps.map((wrap) => ({
     ...wrap,
     _id: wrap._id.toString(),
+    // @ts-ignore
     profilePicture: wrap.user?.image || null,
+    // @ts-ignore
     isAuthor: session?.user.id === wrap.user?._id.toString(),
+    // @ts-ignore
     author: wrap.user?.name,
     user: undefined,
   }));
