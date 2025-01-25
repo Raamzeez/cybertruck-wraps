@@ -3,9 +3,10 @@ import Error from "@/app/components/Error";
 import LargeCard from "@/app/components/LargeCard";
 import { authOptions } from "@/app/lib/auth";
 import OfficialWrap from "@/app/models/OfficialWrap";
+import { User } from "@/app/models/User";
 import Wrap from "@/app/models/Wrap";
 import WrapMongoose from "@/app/models/WrapMongoose";
-import { isValidObjectId } from "mongoose";
+import { isValidObjectId, ObjectId } from "mongoose";
 import { getServerSession } from "next-auth";
 import React from "react";
 
@@ -25,6 +26,8 @@ export default async function Page({
       const json: OfficialWrap[] = await response.json();
       const wrap = json.filter((wrap) => wrap.sha === id)[0];
       const modifiedWrap: Wrap = {
+        _id: wrap.sha,
+        createdAt: new Date(),
         image: wrap.download_url,
         filename: wrap.name,
         title: (wrap.path.split("/").pop() as string)
@@ -33,8 +36,8 @@ export default async function Page({
           .split(".")
           .slice(0, -1)
           .join(""),
+        sha: wrap.sha,
         author: "Tesla Motors",
-        isAuthor: session?.user.id === wrap.user?._id.toString(),
         description: "Official Tesla Cybertruck Wrap From Github",
         official: true,
       };
@@ -45,13 +48,13 @@ export default async function Page({
       .populate("user", "image name")
       .lean();
     const modifiedWrap = {
-      _id: wrap._id.toString(),
+      _id: wrap._id!.toString(),
       title: wrap.title,
       image: wrap.image,
       filename: wrap.filename,
       description: wrap.description,
       createdAt: wrap.createdAt,
-      isAuthor: session?.user.id === wrap.user?._id.toString(),
+      isAuthor: session?.user.id === (wrap.user?._id as User).toString(),
       anonymous: wrap.anonymous,
       profilePicture: populatedWrap?.user?.image,
       author: populatedWrap?.user?.name,
