@@ -12,6 +12,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.7.4",
     "@auth/prisma-adapter": "^2.7.4",

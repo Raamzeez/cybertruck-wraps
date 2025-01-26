@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import InstallationModal from "./InstallationModal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import formatDate from "../lib/formatDate";
 
 const LargeCard = ({ wrap }: { wrap: Wrap }) => {
   const [downloadModal, setDownloadModal] = useState(false);
@@ -94,7 +95,7 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
           </div>
           {!wrap.official && (
             <h1 className="text-lg text-gray-600 dark:text-gray-300 font-light">
-              Date Posted: {wrap.createdAt.toLocaleDateString()}
+              Date Posted: {formatDate(wrap.createdAt)}
             </h1>
           )}
           <h5 className="text-lg mt-5 text-gray-600 dark:text-gray-300 font-light">
