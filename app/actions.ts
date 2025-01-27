@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import WrapMongoose from "./models/WrapMongoose";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
-import cloudinary from "./lib/cloudinary";
+import { getCloudinaryConfig } from "./lib/cloudinary";
 import sharp from "sharp";
 import validateFilename from "./lib/validateFilename";
 import extractPublicId from "./lib/extractPublicId";
@@ -55,6 +55,7 @@ export const deleteWrap = async (id: string) => {
 
     const publicId = extractPublicId(foundWrap.image);
 
+    const cloudinary = getCloudinaryConfig();
     await cloudinary.uploader.destroy(publicId);
 
     revalidatePath("/wraps");
@@ -116,6 +117,7 @@ export const createWrap = async (
       );
     }
 
+    const cloudinary = getCloudinaryConfig();
     const uploadResponse = await cloudinary.uploader.upload(image, {
       upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
     });
