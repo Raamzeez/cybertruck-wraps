@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import WrapMongoose from "./models/WrapMongoose";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "./lib/cloudinary";
 import sharp from "sharp";
 import validateFilename from "./lib/validateFilename";
 import extractPublicId from "./lib/extractPublicId";
@@ -53,12 +53,6 @@ export const deleteWrap = async (id: string) => {
 
     await WrapMongoose.findByIdAndDelete(id);
 
-    cloudinary.config({
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
-
     const publicId = extractPublicId(foundWrap.image);
 
     await cloudinary.uploader.destroy(publicId);
@@ -78,12 +72,6 @@ export const createWrap = async (
   anonymous: boolean
 ) => {
   "use server";
-
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  });
 
   const session = await getServerSession(authOptions);
 
