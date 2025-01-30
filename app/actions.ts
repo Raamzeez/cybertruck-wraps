@@ -4,11 +4,11 @@ import { connectToDatabase } from "@/lib/mongodb";
 import WrapMongoose from "./models/WrapMongoose";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
-import { getCloudinaryConfig } from "./lib/cloudinary";
 import sharp from "sharp";
 import validateFilename from "./lib/validateFilename";
 import extractPublicId from "./lib/extractPublicId";
 import { authOptions } from "./lib/auth";
+import axios from "axios";
 
 export const updateWraps = async () => {
   "use server";
@@ -55,8 +55,22 @@ export const deleteWrap = async (id: string) => {
 
     const publicId = extractPublicId(foundWrap.image);
 
-    const cloudinary = getCloudinaryConfig();
-    await cloudinary.uploader.destroy(publicId);
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const signatureString = `public_id=${publicId}&timestamp=${timestamp}${process.env.CLOUDINARY_API_SECRET}`;
+    const signature = require("crypto")
+      .createHash("sha1")
+      .update(signatureString)
+      .digest("hex");
+
+    await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/destroy`,
+      {
+        public_id: publicId,
+        timestamp: timestamp,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        signature: signature,
+      }
+    );
 
     revalidatePath("/wraps");
   } catch (error) {
@@ -117,14 +131,23 @@ export const createWrap = async (
       );
     }
 
-    const cloudinary = getCloudinaryConfig();
-    const uploadResponse = await cloudinary.uploader.upload(image, {
-      upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
-    });
+    const uploadResponse = await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+      {
+        file: image,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     await WrapMongoose.create({
       title,
-      image: uploadResponse.secure_url,
+      image: uploadResponse.data.secure_url,
       filename,
       description,
       anonymous,
