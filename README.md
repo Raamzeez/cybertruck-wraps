@@ -1,8 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div>
+  <img src="public/images/logo.png" alt="Cybertruck Wraps Logo" width="100"/>
+</div>
 
-## Getting Started
+<h1>Cybertruck Wraps</h1>
 
-First, run the development server:
+<a href="https://cybertruckwraps.io" target="_blank">cybertruckwraps.io</a>
+
+<p>Cybertruck Wraps is a website that allows people to easily share their custom digital cybertruck wraps for other people to download</p>
+
+<hr />
+
+<h3>Background:</h3>
+<p>Tesla's Holiday Update (2024) added the ability for Cybertruck owners to add a custom digital wrap on their infotainment screen. A png image needs to be downloaded that complies with certain requirements related to size and name of the file, which can then be transferred to the specific directory on the TSLADRIVE USB. This will then appear on the Cybertruck's infotainment screen.</p>
+
+<hr />
+
+<h3>Stack:</h3>
+<ul>
+    <li>Next.js</li>
+    <li>Typescript</li>
+    <li>Tailwind CSS</li>
+    <li>MongoDB</li>
+    <li>Cloudinary</li>
+    <li>Google OAuth</li>
+</ul>
+
+<hr />
+
+<h2>Contributing Guidelines</h2>
+<p>To contribute to the project, create your own branch for each feature. Once you are done, create a pull request into the <code>preview</code> branch. The code owners will then merge into <code>preview</code> when appropriate, which will then trigger an automatic testing deployment. The preview branch contains all the code in testing for the next version. Once everything is tested and complete, it will eventually be merged into <code>main</code>, which automatically gets deployed into production.</p>
+
+<h2>Running the Project</h2>
 
 ```bash
 npm run dev
