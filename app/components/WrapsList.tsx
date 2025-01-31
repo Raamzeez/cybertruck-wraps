@@ -29,7 +29,7 @@ const WrapsList = ({ wraps }: Props) => {
         />
         <p className="text-white font-semibold text-xs xxxs:text-sm xxs:text-base">
           This website is currently in beta. Report any bugs to
-          raamizabbasi@gmail.com
+          cybertruckwrapsio@gmail.com
         </p>
       </div>
       <Controls onSearch={setSearch} />
