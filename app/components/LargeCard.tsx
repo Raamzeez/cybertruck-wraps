@@ -83,14 +83,13 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
                 wrap.official
                   ? "/images/tesla.svg"
                   : !wrap.anonymous
-                  ? wrap.profilePicture ??
-                    "https://w7.pngwing.com/pngs/188/501/png-transparent-computer-icons-anonymous-anonymity-anonymous-face-monochrome-head-thumbnail.png"
-                  : "https://w7.pngwing.com/pngs/188/501/png-transparent-computer-icons-anonymous-anonymity-anonymous-face-monochrome-head-thumbnail.png"
+                  ? wrap.profilePicture ?? "/images/anonymous.png"
+                  : "/images/anonymous.png"
               }
+              alt="Profile Picture"
+              className="rounded-full"
               height={30}
               width={30}
-              alt="Tesla Logo"
-              className="rounded-full"
             />
           </div>
           {!wrap.official && (
