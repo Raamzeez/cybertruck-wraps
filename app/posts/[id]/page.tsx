@@ -29,7 +29,7 @@ export default async function Page({
         _id: wrap.sha,
         createdAt: new Date(),
         image: wrap.download_url,
-        filename: wrap.name,
+        filename: wrap.name.split("_").join(""),
         title: (wrap.path.split("/").pop() as string)
           .split("_")
           .join(" ")
