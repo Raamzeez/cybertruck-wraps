@@ -46,7 +46,7 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
           <Image
             src={
               wrap.official
-                ? "https://www.svgrepo.com/show/331599/tesla.svg"
+                ? "/images/tesla.svg"
                 : !wrap.anonymous
                 ? wrap.profilePicture ??
                   "https://w7.pngwing.com/pngs/188/501/png-transparent-computer-icons-anonymous-anonymity-anonymous-face-monochrome-head-thumbnail.png"

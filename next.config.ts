@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "www.svgrepo.com",
       },
+      {
+        protocol: "http",
+        hostname: "www.svgrepo.com",
+      },
     ],
   },
 };
