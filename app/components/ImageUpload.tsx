@@ -34,7 +34,7 @@ const ImageUpload = ({ setUploadedFile }: Props) => {
 
     if (!validateFilename(file.name)) {
       setError(
-        `File name "${file.name}" contains invalid characters. Only alphanumeric characters, dots, underscores, and hyphens are allowed.`
+        `File name "${file.name}" contains invalid characters. Only alphanumeric characters are allowed.`
       );
       return;
     }
