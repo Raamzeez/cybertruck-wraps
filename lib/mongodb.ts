@@ -6,14 +6,12 @@ interface MongooseCache {
 }
 
 declare global {
-  namespace NodeJS {
-    interface Global {
-      mongoose: MongooseCache;
-    }
-  }
+  const mongoose: MongooseCache | undefined;
 }
 
-const globalAny: any = global;
+const globalForMongoose = global as typeof globalThis & {
+  mongoose?: MongooseCache;
+};
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
@@ -21,11 +19,12 @@ if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable");
 }
 
-let cached: MongooseCache = globalAny.mongoose;
+const cached: MongooseCache = globalForMongoose.mongoose ?? {
+  conn: null,
+  promise: null,
+};
 
-if (!cached) {
-  cached = globalAny.mongoose = { conn: null, promise: null };
-}
+globalForMongoose.mongoose = cached;
 
 export async function connectToDatabase(): Promise<Mongoose> {
   if (cached.conn) {

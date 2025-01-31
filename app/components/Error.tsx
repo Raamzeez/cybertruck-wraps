@@ -3,7 +3,15 @@ import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-const Error = () => {
+interface Props {
+  message?: string;
+  showHomeButton?: boolean;
+}
+
+const Error = ({
+  message = "Unable To Find Post",
+  showHomeButton = true,
+}: Props) => {
   return (
     <div className="flex flex-col items-center justify-center">
       <FontAwesomeIcon
@@ -12,12 +20,14 @@ const Error = () => {
         color="orange"
         className="mt-12"
       />
-      <h1 className="text-2xl text-center font-semibold mt-5">
-        Unable To Find Post
+      <h1 className="text-2xl text-center font-semibold mt-5 dark:text-white">
+        {message}
       </h1>
-      <Link href="/">
-        <Button className="mt-12">Back Home</Button>
-      </Link>
+      {showHomeButton && (
+        <Link href="/">
+          <Button className="mt-12">Back Home</Button>
+        </Link>
+      )}
     </div>
   );
 };

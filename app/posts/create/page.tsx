@@ -17,13 +17,11 @@ const CreatePost = () => {
   const [description, setDescription] = useState("");
   const [anonymous, setAnonymous] = useState<boolean>(true);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleUpload = async () => {
     if (!uploadedFile) {
-      setError("No files selected for upload.");
-      return;
+      return toast.error("No files selected for upload.");
     }
 
     if (!title) {
@@ -39,7 +37,7 @@ const CreatePost = () => {
         try {
           await createWrap(
             title,
-            base64File,
+            base64File as string,
             uploadedFile.name,
             description,
             anonymous
@@ -48,22 +46,25 @@ const CreatePost = () => {
           toast.success("Created post successfully");
           await updateWraps();
           return router.push("/");
-        } catch (err: any) {
+        } catch (err: unknown) {
           setLoading(false);
-          return toast.error(err.message);
+          if (err instanceof Error) {
+            return toast.error(err.message);
+          }
+          return toast.error("Unable to create post");
         }
       };
     } catch (error) {
       setLoading(false);
       console.error("Error during file upload:", error);
-      setError("Failed to upload the image. Please try again.");
+      return toast.error("Failed to upload the image. Please try again.");
     }
   };
 
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center">
-        <div className="flex flex-col justify-center items-center w-full p-8 bg-white dark:bg-gray-700 shadow-lg border dark:border-none">
+        <div className="flex flex-col justify-center items-center w-full p-10 max-w-3xl bg-white dark:bg-gray-700 shadow-lg border dark:border-none">
           <Input
             className="max-w-80"
             placeholder="Title"

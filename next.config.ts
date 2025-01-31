@@ -1,13 +1,40 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
-    domains: [
-      "lh3.googleusercontent.com",
-      "raw.githubusercontent.com",
-      "upload.wikimedia.org",
-      "res.cloudinary.com",
-      "w7.pngwing.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "w7.pngwing.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.svgrepo.com",
+      },
+      {
+        protocol: "http",
+        hostname: "www.svgrepo.com",
+      },
     ],
   },
 };

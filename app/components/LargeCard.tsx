@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import InstallationModal from "./InstallationModal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import formatDate from "../lib/formatDate";
 
 const LargeCard = ({ wrap }: { wrap: Wrap }) => {
   const [downloadModal, setDownloadModal] = useState(false);
@@ -21,8 +22,11 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
       await deleteWrap(wrap._id);
       toast.success("Deleted wrap successfully!");
       return router.push("/");
-    } catch (err: any) {
-      return toast.error(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return toast.error(err.message);
+      }
+      return toast.error("Unable to delete wrap");
     }
   };
 
@@ -77,21 +81,20 @@ const LargeCard = ({ wrap }: { wrap: Wrap }) => {
             <Image
               src={
                 wrap.official
-                  ? "https://www.svgrepo.com/show/331599/tesla.svg"
+                  ? "/images/tesla.svg"
                   : !wrap.anonymous
-                  ? wrap.profilePicture ??
-                    "https://w7.pngwing.com/pngs/188/501/png-transparent-computer-icons-anonymous-anonymity-anonymous-face-monochrome-head-thumbnail.png"
-                  : "https://w7.pngwing.com/pngs/188/501/png-transparent-computer-icons-anonymous-anonymity-anonymous-face-monochrome-head-thumbnail.png"
+                  ? wrap.profilePicture ?? "/images/anonymous.png"
+                  : "/images/anonymous.png"
               }
+              alt="Profile Picture"
+              className="rounded-full"
               height={30}
               width={30}
-              alt="Tesla Logo"
-              className="rounded-full"
             />
           </div>
           {!wrap.official && (
             <h1 className="text-lg text-gray-600 dark:text-gray-300 font-light">
-              Date Posted: {wrap.createdAt.toLocaleDateString()}
+              Date Posted: {formatDate(wrap.createdAt)}
             </h1>
           )}
           <h5 className="text-lg mt-5 text-gray-600 dark:text-gray-300 font-light">

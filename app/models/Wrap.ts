@@ -7,7 +7,7 @@ interface Wrap {
   createdAt: Date;
   description?: string;
   official?: boolean;
-  sha?: number;
+  sha?: string;
   profilePicture?: string;
   anonymous?: boolean;
   isAuthor?: boolean;

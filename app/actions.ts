@@ -4,11 +4,11 @@ import { connectToDatabase } from "@/lib/mongodb";
 import WrapMongoose from "./models/WrapMongoose";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import { v2 as cloudinary } from "cloudinary";
 import sharp from "sharp";
 import validateFilename from "./lib/validateFilename";
 import extractPublicId from "./lib/extractPublicId";
+import { authOptions } from "./lib/auth";
+import axios from "axios";
 
 export const updateWraps = async () => {
   "use server";
@@ -53,15 +53,24 @@ export const deleteWrap = async (id: string) => {
 
     await WrapMongoose.findByIdAndDelete(id);
 
-    cloudinary.config({
-      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
-
     const publicId = extractPublicId(foundWrap.image);
 
-    await cloudinary.uploader.destroy(publicId);
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const signatureString = `public_id=${publicId}&timestamp=${timestamp}${process.env.CLOUDINARY_API_SECRET}`;
+    const signature = require("crypto")
+      .createHash("sha1")
+      .update(signatureString)
+      .digest("hex");
+
+    await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/destroy`,
+      {
+        public_id: publicId,
+        timestamp: timestamp,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        signature: signature,
+      }
+    );
 
     revalidatePath("/wraps");
   } catch (error) {
@@ -78,12 +87,6 @@ export const createWrap = async (
   anonymous: boolean
 ) => {
   "use server";
-
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  });
 
   const session = await getServerSession(authOptions);
 
@@ -128,13 +131,23 @@ export const createWrap = async (
       );
     }
 
-    const uploadResponse = await cloudinary.uploader.upload(image, {
-      upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
-    });
+    const uploadResponse = await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+      {
+        file: image,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     await WrapMongoose.create({
       title,
-      image: uploadResponse.secure_url,
+      image: uploadResponse.data.secure_url,
       filename,
       description,
       anonymous,

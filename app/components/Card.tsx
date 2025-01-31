@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import InstallationModal from "./InstallationModal";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import formatDate from "../lib/formatDate";
 
 const Card = ({ wrap }: { wrap: Wrap }) => {
   const [downloadModal, setDownloadModal] = useState(false);
@@ -21,8 +22,11 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
     try {
       await deleteWrap(wrap._id);
       return toast.success("Wrap deleted successfully");
-    } catch (err: any) {
-      return toast.error(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return toast.error(err.message);
+      }
+      return toast.error("Unable to delete wrap");
     }
   };
 
@@ -42,15 +46,14 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
           <Image
             src={
               wrap.official
-                ? "https://www.svgrepo.com/show/331599/tesla.svg"
+                ? "/images/tesla.svg"
                 : !wrap.anonymous
-                ? wrap.profilePicture ??
-                  "https://w7.pngwing.com/pngs/188/501/png-transparent-computer-icons-anonymous-anonymity-anonymous-face-monochrome-head-thumbnail.png"
-                : "https://w7.pngwing.com/pngs/188/501/png-transparent-computer-icons-anonymous-anonymity-anonymous-face-monochrome-head-thumbnail.png"
+                ? wrap.profilePicture ?? "/images/anonymous.png"
+                : "/images/anonymous.png"
             }
             height={36}
             width={36}
-            alt="Tesla Logo"
+            alt="Profile Picture"
             className="rounded-full"
           />
           {wrap.isAuthor && (
@@ -98,7 +101,7 @@ const Card = ({ wrap }: { wrap: Wrap }) => {
           {!wrap.official && (
             <div className="flex justify-around items-center mt-3 space-x-4">
               <h1 className="text-gray-600 dark:text-gray-300 text-xs font-light">
-                Date Posted: {wrap.createdAt.toLocaleDateString()}
+                Date Posted: {formatDate(wrap.createdAt)}
               </h1>
               <h1 className="text-gray-600 dark:text-gray-300 text-xs font-light">
                 Published by: {!wrap.anonymous ? wrap.author : "Anonymous"}
