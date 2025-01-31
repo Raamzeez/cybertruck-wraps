@@ -110,7 +110,7 @@ export const createWrap = async (
 
     if (!validateFilename(filename)) {
       throw new Error(
-        `File name "${filename}" contains invalid characters. Only alphanumeric characters, dots, underscores, and hyphens are allowed.`
+        `File name "${filename}" contains invalid characters. Only alphanumeric characters are allowed.`
       );
     }
 

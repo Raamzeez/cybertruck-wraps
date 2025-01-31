@@ -20,7 +20,7 @@ export default async function Home() {
     // @ts-ignore
     const officialwraps: Wrap[] = json.map((wrap) => ({
       sha: wrap.sha,
-      filename: wrap.name,
+      filename: wrap.name.split("_").join(""),
       title: (wrap.path.split("/").pop() as string)
         .split("_")
         .join(" ")

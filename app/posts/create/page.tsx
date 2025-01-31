@@ -103,8 +103,8 @@ const CreatePost = () => {
             <li>The image must be 1024x768 pixels</li>
             <li>Maximum file size is 1 MB</li>
             <li>
-              You can’t use any special characters in the file name, and it must
-              be shorter than 30 character
+              You can’t use any special characters in the file name (only
+              alphanumeric is allowed), and it must be shorter than 30 character
             </li>
             <li>PNG is the only acceptable file format</li>
             <h1 className="font-semibold text-blue-400 mt-5">
