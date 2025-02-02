@@ -6,10 +6,9 @@ interface Wrap {
   author: string;
   createdAt: Date;
   description?: string;
-  official?: boolean;
-  sha?: string;
-  profilePicture?: string;
-  anonymous?: boolean;
+  official: boolean;
+  profilePicture: string;
+  anonymous: boolean;
   isAuthor?: boolean;
 }
 

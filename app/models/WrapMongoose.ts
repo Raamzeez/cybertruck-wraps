@@ -1,15 +1,15 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-
 import User from "./User";
 
 export interface Wrap extends Document {
   title: string;
-  description?: string;
   image: string;
   filename: string;
-  anonymous?: boolean;
-  user: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
+  anonymous: boolean;
+  description?: string;
+  official: boolean;
+  user: mongoose.Schema.Types.ObjectId;
 }
 
 const WrapSchema: Schema<Wrap> = new Schema(
