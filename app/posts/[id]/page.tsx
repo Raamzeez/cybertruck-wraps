@@ -19,30 +19,6 @@ export default async function Page({
   const id = (await params).id;
 
   try {
-    if (!isValidObjectId(id)) {
-      const response = await fetch(
-        "https://api.github.com/repos/teslamotors/custom-wraps/contents/example/cybertruck"
-      );
-      const json: OfficialWrap[] = await response.json();
-      const wrap = json.filter((wrap) => wrap.sha === id)[0];
-      const modifiedWrap: Wrap = {
-        _id: wrap.sha,
-        createdAt: new Date(),
-        image: wrap.download_url,
-        filename: wrap.name.split("_").join(""),
-        title: (wrap.path.split("/").pop() as string)
-          .split("_")
-          .join(" ")
-          .split(".")
-          .slice(0, -1)
-          .join(""),
-        sha: wrap.sha,
-        author: "Tesla Motors",
-        description: "Official Tesla Cybertruck Wrap From Github",
-        official: true,
-      };
-      return <LargeCard wrap={modifiedWrap} />;
-    }
     const wrap = await fetchWrapById(id);
     const populatedWrap = await WrapMongoose.findById(wrap._id)
       .populate("user", "image name")
@@ -54,16 +30,20 @@ export default async function Page({
       filename: wrap.filename,
       description: wrap.description,
       createdAt: wrap.createdAt,
-      // @ts-ignore
-      isAuthor: session?.user.id === (wrap.user?._id as User).toString(),
+      official: wrap.official,
+      isAuthor: !wrap.official
+        ? // @ts-ignore
+          session?.user.id === (wrap.user?._id as User).toString()
+        : false,
       anonymous: wrap.anonymous,
       // @ts-ignore
       profilePicture: populatedWrap?.user?.image,
       // @ts-ignore
-      author: populatedWrap?.user?.name,
+      author: wrap.official ? "Tesla Motors" : populatedWrap?.user?.name,
     };
     return <LargeCard wrap={modifiedWrap} />;
-  } catch {
+  } catch (error) {
+    console.error(error);
     return <Error />;
   }
 }

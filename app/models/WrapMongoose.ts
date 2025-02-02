@@ -18,6 +18,7 @@ const WrapSchema: Schema<Wrap> = new Schema(
     description: { type: String, required: false, trim: true },
     filename: { type: String, required: false, trim: true },
     anonymous: { type: Boolean, required: true, default: false },
+    official: { type: Boolean, required: true, default: false },
     image: { type: String, required: true },
     user: {
       type: mongoose.Schema.Types.ObjectId,

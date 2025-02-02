@@ -2,12 +2,7 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import WrapMongoose from "@/app/models/WrapMongoose";
 import axios from "axios";
-import { ObjectId } from "mongodb";
-
-const shaToObjectId = (sha: string): string => {
-  const hex = (sha + "0".repeat(24)).slice(0, 24);
-  return hex;
-};
+import shaToObjectId from "@/app/lib/shaToObjectId";
 
 const fetchAndStoreWraps = async () => {
   try {
